@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
+
 class New extends Component{
+
 
 
   constructor(props){
@@ -10,7 +12,10 @@ class New extends Component{
       validCred:false,
       newText: ""
     };
+
+
     this.buttonPress = this.buttonPress.bind(this);
+    this.saveText = this.saveText.bind(this);
   }
 
 
@@ -24,18 +29,42 @@ class New extends Component{
     console.log(this.state.user + ":" + this.state.pass);
   }
 
+  saveText(event){
+    event.preventDefault();
+    this.setState({
+      newText: event.target[0].value
+    });
+  }
+
+
 
   render(){
 
-      const Textbox = () => {
-        return (
-          <div>
-          <textarea />
+    const StoredNotes = (props) =>{
+      return(
+        <div>
+          <textarea>{props.text}</textarea>
+        </div>
+      );
+    }
+    StoredNotes.defaultProps = {text:"."}
+
+    const Textbox = (props) => {
+      return (
+        <div>
+        <form onSubmit={this.saveText}>
+          <textarea/>
           <br/>
-          <button>Save</button>
-          </div>
-        );
-      };
+          <button type="submit">Save</button>
+        </form>
+
+        <p>{this.state.newText}</p>
+        <StoredNotes text={this.state.newText}/>
+
+        </div>
+      );
+    }
+
 
       const Login = () =>{
         return (
@@ -55,12 +84,12 @@ class New extends Component{
     return(
       <div>
       {!this.state.validCred && <Login/>}
-      {this.state.validCred && <Textbox newText={this.state.newText}/>}
+      {this.state.validCred && <Textbox/>}
       </div>
     );
   }
 
-  componentWillRecieveProps(){
+  componentWillReceiveProps(){
 
   }
 
