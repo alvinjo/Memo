@@ -1,0 +1,15 @@
+[{"userId":1,"username":"one","password":"two","memos":[{"Id":1,"note":"John","userId":1}]}]
+
+
+user json
+{"username":"two","password":"jwo"}
+
+user json with id (for updating)
+{"userId":1,"username":"one","password":"two"}
+
+
+memo json
+{"note":"John","userId":1}
+
+memo json with id (for updating)
+{"Id": 4, "note": "chibby choo", "userId": 2}
