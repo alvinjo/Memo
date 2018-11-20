@@ -1,35 +1,35 @@
 import React, { Component } from 'react';
-import Test from './Test.js'
-import ReactDOM from 'react-dom'
+import Test from './Test.js';
+import ReactDOM from 'react-dom';
 import axios from 'axios';
+import Register from './Register.js';
+import NotePage from './NotePage.js';
 
 class New extends Component{
-
 
 
   constructor(props){
     super(props);
     this.state = {
-      user:"#", //not needed. can compare input value to db values directly without storing in state.
-      pass:"#", //
-      validCred:false,
+      user: "#",
+      displayView: 0,
       newText: "",
       box: []
     };
 
-    this.buttonPress = this.buttonPress.bind(this);
+    this.loginPress = this.loginPress.bind(this);
     this.saveText = this.saveText.bind(this);
-    this.addElement = this.addElement.bind(this);
     this.grabUserAccounts = this.grabUserAccounts.bind(this);
+    this.registerPress = this.registerPress.bind(this);
   }
 
-  grabUserAccounts(){
+  grabUserAccounts(cred){
     var session = this;
     axios.get('http://localhost:8080/Memo/api/memo/getUsersAll').then(function (response){
       var results = response.data;
       for (var i = 0; i < results.length; i++) {
-        if(results[i].username === session.state.user && results[i].password === session.state.pass){
-          session.setState({validCred: true});
+        if(results[i].username === cred.user && results[i].password === cred.pass){
+          session.setState({displayView: 1});
         }
       }
 
@@ -37,27 +37,18 @@ class New extends Component{
   }
 
 
-  // grabUserAccountsTwo = () =>{
-  //   axios({
-  //     url:'http://localhost:8080/Memo/api/memo/getUsersAll',
-  //     method: 'get',
-  //     headers: {
-  //       'Access-Control-Allow-Origin': '*'
-  //     }
-  //   }).then(function (response){
-  //
-  //   });
-  // }
 
-
-  buttonPress(event){
+  loginPress(event){
     event.preventDefault();
-    this.setState({
+    var cred = {
       user: event.target[0].value,
       pass: event.target[1].value,
+    };
+    this.setState({
+      user: cred.user
     });
     // console.log(this.state.user + ":" + this.state.pass);
-    {this.grabUserAccounts()}
+    {this.grabUserAccounts(cred)}
   }
 
   saveText(event){
@@ -67,10 +58,20 @@ class New extends Component{
     });
   }
 
-  addElement(){
-    ReactDOM.render(<Test/>, document.getElementById("contain"));
+  registerPress(){
+    this.setState({
+      displayView: 2
+    });
   }
 
+
+  homePress(){
+    // console.log("before: " + this.state.displayView);
+    this.setState({
+      displayView:1
+    });
+    // console.log("after: " + this.state.displayView);
+  }
 
 
   render(){
@@ -94,12 +95,6 @@ class New extends Component{
 
           <p>{this.state.newText}</p>
           <StoredNotes text={this.state.newText}/>
-
-          <button onClick={this.addElement}>Add Element</button>
-
-          <div id="contain">
-
-          </div>
         </div>
       );
     }
@@ -108,13 +103,14 @@ class New extends Component{
       const Login = (props) =>{
         return (
           <div>
-          <form onSubmit={this.buttonPress}>
+          <form onSubmit={this.loginPress}>
             Username:<input></input>
             <br/>
             Password:<input></input>
             <br/>
             <button type="submit">login</button>
           </form>
+          <button onClick={this.registerPress}>register</button>
           <h1>{props.user}:{props.pass}</h1>
           </div>
         );
@@ -122,8 +118,9 @@ class New extends Component{
 
     return(
       <div>
-      {!this.state.validCred && <Login user={this.state.user} pass={this.state.pass}/>}
-      {this.state.validCred && <Textbox/>}
+      {this.state.displayView===0 && <Login user={this.state.user} pass={this.state.pass}/>}
+      {this.state.displayView===1 && <NotePage user={this.state.user}/>}
+      {this.state.displayView===2 && <Register homePress={this.homePress}/>}
       </div>
     );
   }
