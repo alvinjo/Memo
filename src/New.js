@@ -21,6 +21,7 @@ class New extends Component{
     this.saveText = this.saveText.bind(this);
     this.grabUserAccounts = this.grabUserAccounts.bind(this);
     this.registerPress = this.registerPress.bind(this);
+    this.homePress = this.homePress.bind(this);
   }
 
   grabUserAccounts(cred){
@@ -66,11 +67,9 @@ class New extends Component{
 
 
   homePress(){
-    // console.log("before: " + this.state.displayView);
     this.setState({
-      displayView:1
+      displayView:0
     });
-    // console.log("after: " + this.state.displayView);
   }
 
 

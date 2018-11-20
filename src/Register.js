@@ -11,7 +11,6 @@ class Register extends Component{
       registered:false
     }
     this.registerDetails = this.registerDetails.bind(this);
-    // this.homePress = this.homePress.bind(this);
   }
 
 
@@ -33,10 +32,6 @@ class Register extends Component{
     });
   }
 
-  // homePress(){
-  //   console.log(this.props.view);
-  //   this.props.view = 1;
-  // }
 
 
   render(){
