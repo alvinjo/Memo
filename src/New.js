@@ -13,7 +13,6 @@ class New extends Component{
     this.state = {
       user: "#",
       displayView: 0,
-      newText: "",
       box: []
     };
 
@@ -103,14 +102,13 @@ class New extends Component{
         return (
           <div>
           <form onSubmit={this.loginPress}>
-            Username:<input></input>
+            Username:<input/>
             <br/>
-            Password:<input></input>
+            Password:<input type="password"/>
             <br/>
             <button type="submit">login</button>
           </form>
           <button onClick={this.registerPress}>register</button>
-          <h1>{props.user}:{props.pass}</h1>
           </div>
         );
       }
@@ -124,9 +122,6 @@ class New extends Component{
     );
   }
 
-  componentWillReceiveProps(){
-
-  }
 
 }
 export default New;
