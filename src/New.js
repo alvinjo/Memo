@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-import Test from './Test.js';
-import ReactDOM from 'react-dom';
 import axios from 'axios';
 import Register from './Register.js';
 import NotePage from './NotePage.js';
@@ -73,30 +71,6 @@ class New extends Component{
 
 
   render(){
-    const StoredNotes = (props) =>{
-      return(
-        <div>
-          <textarea>{props.text}</textarea>
-        </div>
-      );
-    }
-    StoredNotes.defaultProps = {text:"#"}
-
-    const Textbox = (props) => {
-      return (
-        <div>
-          <form onSubmit={this.saveText}>
-            <textarea/>
-            <br/>
-            <button type="submit">Save</button>
-          </form>
-
-          <p>{this.state.newText}</p>
-          <StoredNotes text={this.state.newText}/>
-        </div>
-      );
-    }
-
 
       const Login = (props) =>{
         return (

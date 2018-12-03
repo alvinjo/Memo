@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 
-
 class NotePage extends Component{
 
   constructor(props){
@@ -18,8 +17,6 @@ class NotePage extends Component{
     this.deleteNote = this.deleteNote.bind(this);
     this.updateMemo = this.updateMemo.bind(this);
     this.addNote = this.addNote.bind(this);
-    // this.deleteNoteFromState = this.deleteNoteFromState.bind(this);
-    // this.renderText = this.renderText.bind(this);
   }
 
   deleteNote(event){
@@ -30,9 +27,7 @@ class NotePage extends Component{
     var headers = {'Content-Type': 'application/json'}
     axios.post('http://localhost:8080/Memo/api/memo/removeNote', delId, {headers:headers})
     .then(function (response){
-      console.log(response);
       {session.getUserByName()}
-      // {session.deleteNoteFromState(delId)}
     }).catch(function (error){
       console.log(error);
     });
@@ -43,12 +38,11 @@ class NotePage extends Component{
     var session = this;
       axios.post('http://localhost:8080/Memo/api/memo/getUserByName', this.state.user)
       .then(function (response){
-        // console.log(response);
         session.setState({
           memos:response.data[0].memos,
           id:response.data[0].userId
         });
-        {session.makeElements()} //Method call must remain here for it to execute sequentially.
+        {session.makeElements()}
       }).catch(function (error){
         console.log(error);
         console.log(error.response);
@@ -68,18 +62,12 @@ class NotePage extends Component{
     axios.put('http://localhost:8080/Memo/api/memo/updateNote',
     {"Id":noteId, "note":updatedNote, "userId":userId}, {headers:headers})
     .then(function (response){
-      console.log(response);
       {session.getUserByName()}
     }).catch(function (error){
       console.log(error);
     });
 
   }
-
-  // renderText(event){
-  //   var elem = document.getElementById(event.target.id);
-  //   elem.innerHTML = elem.value;
-  // }
 
   makeElements(){
     var session = this;
@@ -102,20 +90,6 @@ class NotePage extends Component{
 
   }
 
-  // deleteNoteFromState(delId){
-  //   console.log(this.state.newMemos.length);
-  //   for (var i = 0; i < this.state.newMemos.length; i++) {
-  //     if(this.state.newMemos[i].id === delId){
-  //       console.log(this.state.newMemos[i].id);
-  //       var updatedMemo = this.state.newMemos.splice(i, 1);
-  //       this.setState({
-  //         newMemos: updatedMemo
-  //       });
-  //     }
-  //   }
-  //   console.log(this.state.newMemos);
-  // }
-
   addNote(event){
     event.preventDefault();
     var session = this;
@@ -124,8 +98,6 @@ class NotePage extends Component{
 
     axios.post('http://localhost:8080/Memo/api/memo/addNote', {"note":newNote, "userId":userId})
     .then(function (response){
-      console.log(response);
-      // document.getElementById("userAddMessage").innerHTML=response.data.message;
       {session.getUserByName()}
     }).catch(function (error){
       console.log(error);
